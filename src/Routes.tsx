@@ -1,9 +1,17 @@
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
+
 import Navbar from 'components/Navbar';
-import { BrowserRouter } from 'react-router-dom';
+import Auth from 'pages/Auth';
 
 const Routes = () => (
   <BrowserRouter >
-    <Navbar />    
+    <Navbar /> 
+    <Switch>
+      <Route path="/">
+        <Auth />
+      </Route>
+     
+    </Switch>   
   </BrowserRouter>
 );
 
