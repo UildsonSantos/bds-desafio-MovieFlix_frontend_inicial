@@ -35,9 +35,13 @@ const Navbar = () => {
 
   return (
     <nav className="navbar bg-primary main-nav">
-      <Link to="/" className="nav-logo-text">
+      {authContextData.authenticated ? (
+        <Link to="/movies" className="nav-logo-text">
+          <h4>MovieFlix</h4>
+        </Link>
+      ) : (
         <h4>MovieFlix</h4>
-      </Link>
+      )}
 
       {authContextData.authenticated && (
         <div className="nav-login-logout">

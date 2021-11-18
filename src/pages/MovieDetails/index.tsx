@@ -6,7 +6,8 @@ import { AxiosRequestConfig } from 'axios';
 import ButtonIcon from 'components/ButtonIcon';
 import CardReview from 'components/CardReview';
 import { requestBackend } from 'util/requests';
-import { hasAnyRoles } from 'util/auth';
+import { hasAnyRoles, isAuthenticated } from 'util/auth';
+import history from 'util/history';
 import { Review } from 'types/Review';
 
 import './styles.css';
@@ -47,13 +48,19 @@ const MovieDetails = () => {
       url: `/movies/${movieId}/reviews`,
       withCredentials: true,
     };
-    requestBackend(params)
+    isAuthenticated() ? 
+    (
+      requestBackend(params)
       .then((response) => {
         setMovieReviews(response.data);
       })
       .finally(() => {
         setIsLoading(false);
-      });
+      })
+    ) : (
+      history.push("/")
+    );
+
   }, [movieId]);
 
   return (

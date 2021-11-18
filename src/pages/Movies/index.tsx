@@ -5,6 +5,8 @@ import { AxiosRequestConfig } from 'axios';
 import { Movie } from 'types/movie';
 import { SpringPage } from 'types/vendor/spring';
 import { requestBackend } from 'util/requests';
+import { isAuthenticated } from 'util/auth';
+import history from 'util/history';
 
 import './styles.css';
 
@@ -19,13 +21,15 @@ const Movies = () => {
     };
 
     setIsLoading(true);
-    requestBackend(params)
-      .then((response) => {
-        setPage(response.data);
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
+    isAuthenticated()
+      ? requestBackend(params)
+          .then((response) => {
+            setPage(response.data);
+          })
+          .finally(() => {
+            setIsLoading(false);
+          })
+      : history.push('/');
   }, []);
 
   return (
